@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '3.0.0'
+    id("io.freefair.lombok") version "9.0.0"
 }
 
 group = 'org.example'
@@ -10,8 +12,25 @@ repositories {
 }
 
 dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation("com.codeborne:selenide:7.10.0")
+    testImplementation 'org.assertj:assertj-core:3.27.4'
+    testImplementation("io.qameta.allure:allure-junit5:2.30.0")
+    testImplementation("io.qameta.allure:allure-assertj:2.30.0")
+    implementation 'io.rest-assured:rest-assured:5.3.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.2'
+    implementation platform('org.jdbi:jdbi3-bom:3.43.0')
+    implementation 'org.jdbi:jdbi3-core'
+    implementation 'org.jdbi:jdbi3-sqlobject'
+    implementation 'org.jdbi:jdbi3-jackson2'
+    implementation 'org.jdbi:jdbi3-postgres'
+
+    implementation 'org.postgresql:postgresql:42.7.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+// Для поддержки работы с датами и временем из Java 8+ (JSR-310)
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.2'
 }
 
 test {
