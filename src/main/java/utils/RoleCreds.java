@@ -2,6 +2,7 @@ package utils;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 // Пользователи для передачи кредов на логин
 @Getter
 @RequiredArgsConstructor

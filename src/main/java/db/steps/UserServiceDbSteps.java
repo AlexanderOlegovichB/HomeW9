@@ -91,7 +91,7 @@ public class UserServiceDbSteps extends DbBaseSteps {
      * Получить отзыв по userId + movieId.
      * Делает вызов DAO для выбора отзыва из базы.
      *
-     * @param userId Идентификатор пользователя.
+     * @param userId  Идентификатор пользователя.
      * @param movieId Идентификатор фильма.
      * @return Объект Review, полученный из базы.
      */

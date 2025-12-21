@@ -77,7 +77,7 @@ public class DeleteReviewDbIntegrationTestPositive {
     }
 
     void cleanUp() {
-        if(cleanMovieId != null && cleanUserId != null) {
+        if (cleanMovieId != null && cleanUserId != null) {
             String adminToken = authHelper.login(RoleCreds.ADMIN).getAccessToken();
 
             movieClient.deleteReview(cleanMovieId, cleanUserId, adminToken);
