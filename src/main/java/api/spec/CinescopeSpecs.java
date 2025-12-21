@@ -10,7 +10,7 @@ public class CinescopeSpecs {
 
 
     private static final String authBaseUri = "https://auth.cinescope.t-qa.ru";
-    private static final String apiBaseUri = "https://auth.cinescope.t-qa.ru";
+    private static final String apiBaseUri = "https://api.cinescope.t-qa.ru";
     private static final String contentType = "application/json";
 
     public static RequestSpecification authRequestSpec() {

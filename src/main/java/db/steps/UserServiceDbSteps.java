@@ -1,7 +1,9 @@
 package db.steps;
 
 import db.DbBaseSteps;
+import db.dao.reviews.ReviewsDao;
 import db.dao.users.UsersDao;
+import db.domain.reviews.Review;
 import db.domain.users.User;
 import io.qameta.allure.Step;
 import utils.DbCredentials;
@@ -43,7 +45,7 @@ public class UserServiceDbSteps extends DbBaseSteps {
      * @return Объект User, полученный из базы.
      */
     @Step("Получить юзера по айди {userId}")
-    public User getUserByUserId(long userId) {
+    public User getUserByUserId(String userId) {
         // withExtension создаёт и закрывает DAO для выполнения запроса SELECT
         return dbClient.withExtension(UsersDao.class, dao -> dao.selectByUserId(String.valueOf(userId)));
     }
@@ -81,8 +83,21 @@ public class UserServiceDbSteps extends DbBaseSteps {
     @Step("Удалить юзера")
     public void deleteUserById(long userId) {
         // Аналогично, useExtension подходит для void-метода удаления
-        dbClient.useExtension(UsersDao.class, dao -> dao.deleteUserById(userId));
+        dbClient.useExtension(UsersDao.class, dao -> dao.deleteUserById(String.valueOf(userId)));
     }
 
-    // когда у нас появятся еще DAO, мы также добавим сюда шаги для работы с ним
+
+    /**
+     * Получить отзыв по userId + movieId.
+     * Делает вызов DAO для выбора отзыва из базы.
+     *
+     * @param userId Идентификатор пользователя.
+     * @param movieId Идентификатор фильма.
+     * @return Объект Review, полученный из базы.
+     */
+    @Step("Получить отзыв по айди фльма {movieId} и юзера {userId}")
+    public Review getReviewByUserAndMovieId(String userId, Integer movieId) {
+        // withExtension создаёт и закрывает DAO для выполнения запроса SELECT
+        return dbClient.withExtension(ReviewsDao.class, dao -> dao.selectByMovieIdAndUserId(movieId, userId));
+    }
 }

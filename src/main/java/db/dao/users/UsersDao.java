@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * DAO-интерфейс для работы с таблицей пользователей (global.users).
+ * DAO-интерфейс для работы с таблицей пользователей (public.users).
  * Методы здесь описывают операции с БД в виде аннотированных SQL-запросов.
  */
 
@@ -19,7 +19,7 @@ public interface UsersDao {
 
     /**
      * Запрос на получение одного пользователя по его user_id.
-     * @param userId идентификатор пользователя для поиска.
+     * @param id идентификатор пользователя для поиска.
      * @return объект User, десериализованный из JSONB-колонки.
      *
      * Аннотации:
@@ -28,8 +28,8 @@ public interface UsersDao {
      *  - @Bind: связывает параметр метода userId с параметром SQL-контекста.
      */
     @Json
-    @SqlQuery("SELECT to_jsonb(u) FROM global.users as u WHERE user_id = :userId")
-    User selectByUserId(@Bind("userId") String userId);
+    @SqlQuery("SELECT to_jsonb(u) FROM public.users as u WHERE id = :id")
+    User selectByUserId(@Bind("id") String id);
 
     /**
      * Запрос на получение списка всех пользователей.
@@ -38,13 +38,13 @@ public interface UsersDao {
      * Аннотации такие же, как и в selectByUserId.
      */
     @Json
-    @SqlQuery("SELECT to_jsonb(u) FROM global.users as u")
+    @SqlQuery("SELECT to_jsonb(u) FROM public.users as u")
     List<User> selectAll();
 
     /**
      * Запрос обновления времени регистрации пользователя.
-     * @param userId идентификатор пользователя
-     * @param registeredAt новое значение времени регистрации (LocalDateTime)
+     * @param id идентификатор пользователя
+     * @param updatedAt новое значение времени регистрации (LocalDateTime)
      * @return true, если обновление прошло успешно (обычно если изменена хотя бы одна строка)
      * если результат не нужен, то можно ничего не возращать и написать void
      *
@@ -52,8 +52,8 @@ public interface UsersDao {
      *  - @SqlUpdate: SQL-запрос изменения данных (UPDATE).
      *  - @Bind: связывает параметры метода с параметрами SQL.
      */
-    @SqlUpdate("UPDATE global.users SET registered_at = :registeredAt WHERE user_id = :userId")
-    boolean updateRegisteredAtTime(@Bind("userId") long userId, @Bind("registeredAt") LocalDateTime registeredAt);
+    @SqlUpdate("UPDATE public.users SET updated_at = :updatedAt WHERE id = :id")
+    boolean updateRegisteredAtTime(@Bind("id") String id, @Bind("updatedAt") LocalDateTime updatedAt);
 
     /**
      * Вставка нового пользователя в таблицу users.
@@ -61,16 +61,15 @@ public interface UsersDao {
      * @return количество добавленных строк (обычно 1 при успешной вставке)
      * если результат не нужен, то можно ничего не возращать и написать void
      */
-    @SqlUpdate("INSERT INTO global.users (user_id, email, registered_at) VALUES (:userId, :email, :registeredAt)")
+    @SqlUpdate("INSERT INTO public.users (user_id, email, created_at) VALUES (:userId, :email, :created_at)")
     int insertUser(@BindBean User user);
 
     /**
      * Удаление пользователя по user_id.
-     * @param userId идентификатор пользователя, которого нужно удалить
+     * @param id идентификатор пользователя, которого нужно удалить
      * @return количество удалённых строк (0 если такого user_id нет, 1 если удалён)
      * если результат не нужен, то можно ничего не возращать и написать void
      */
-    @SqlUpdate("DELETE FROM global.users WHERE user_id = :userId")
-    int deleteUserById(@Bind("userId") long userId);
-
+    @SqlUpdate("DELETE FROM public.users WHERE id = :id")
+    int deleteUserById(@Bind("id") String id);
 }
