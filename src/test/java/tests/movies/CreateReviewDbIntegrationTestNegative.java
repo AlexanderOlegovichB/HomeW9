@@ -40,7 +40,7 @@ public class CreateReviewDbIntegrationTestNegative {
         // данные
         RoleCreds userRole = RoleCreds.USER;
         String text = "Not Duplicate";
-        Integer movieId = 689;
+        Integer movieId = 53;
         Integer rating = 4;
 
         // Логин и получение токена и юззерайди

@@ -40,7 +40,7 @@ public class CreateReviewDbIntegrationTestPositive {
     public void shouldCreateReviewAndPersistInDbTest() {
         // ДАнные
         RoleCreds userRole = RoleCreds.USER;
-        Integer movieId = 689;
+        Integer movieId = 53;
         String text = "Фильм получается ага";
         Integer rating = 4;
 

@@ -37,7 +37,7 @@ public class DeleteReviewDbIntegrationTestPositive {
     public void shouldDeleteReviewAndNotPersistInDb() {
         // Данные теста
         RoleCreds userRole = RoleCreds.USER;
-        Integer movieId = 689;
+        Integer movieId = 53;
         String text = "Отзыва для теста удаления";
         Integer rating = 5;
 
