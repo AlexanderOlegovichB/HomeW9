@@ -1,11 +1,11 @@
 package tests.movies;
 
 import api.client.MovieClient;
-import api.dto.auth.AuthResponseDto;
 import api.dto.reviews.CreateReviewRequestDto;
 import api.helper.AuthHelper;
 import db.domain.reviews.Review;
 import db.steps.UserServiceDbSteps;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,15 +38,14 @@ public class CreateReviewDbIntegrationTestNegative {
     @DisplayName("Повторное создание отзыва с проверкой наличия первичного отзыва в БД")
     void shouldNotDuplicateReview() {
         // данные
-        RoleCreds userRole = RoleCreds.USER;
         String text = "Not Duplicate";
         Integer movieId = 53;
         Integer rating = 4;
 
         // Логин и получение токена и юззерайди
-        AuthResponseDto auth = authHelper.login(userRole);
-        String userId = auth.getUser().getId();
-        String userToken = auth.getAccessToken();
+        Pair<String, String> authData = authHelper.loginAndGetToken(RoleCreds.USER);
+        String userId = authData.getLeft();
+        String userToken = authData.getRight();
 
         // Сохранение для метода очистки
         cleanUserId = userId;
@@ -65,8 +64,12 @@ public class CreateReviewDbIntegrationTestNegative {
         //Проверка что после первого создания отзыв появился
         Review firstReviewFromDb = userServiceDbSteps.getReviewByUserAndMovieId(userId, movieId);
 
-        assertThat(firstReviewFromDb).as("Отзыв должен присутствовать после первого создания").isNotNull();
-        assertThat(firstReviewFromDb.getText()).isEqualTo(text);
+        assertThat(firstReviewFromDb)
+                .as("Отзыв должен присутствовать после первого создания")
+                .isNotNull();
+        assertThat(firstReviewFromDb.getText())
+                .as("Текст в бд должен соответствовать отправляемому тексту")
+                .isEqualTo(text);
 
         //Проверка что после первого создания повторная попытка падает по 409 (responseSpecConflict)
         movieClient.createDuplicateReview(request, userToken);

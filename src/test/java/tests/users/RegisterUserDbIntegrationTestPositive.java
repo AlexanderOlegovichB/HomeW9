@@ -51,9 +51,14 @@ public class RegisterUserDbIntegrationTestPositive {
         User userFromDb = userServiceDbSteps.getUserByUserId(userId);
 
         //Проверки
-        assertThat(userFromDb.getId()).isEqualTo(response.getId());
-        assertThat(userFromDb.getEmail()).isEqualTo(response.getEmail());
-        assertThat(userFromDb.getFullName()).isEqualTo(response.getFullName());
-
+        assertThat(userFromDb.getId())
+                .as("Id в БД должен совпадать с Id из ответа обновления")
+                .isEqualTo(response.getId());
+        assertThat(userFromDb.getEmail())
+                .as("Email в БД должен совпадать с Email из ответа обновления")
+                .isEqualTo(response.getEmail());
+        assertThat(userFromDb.getFullName())
+                .as("FullName в БД должен совпадать с FullName из ответа обновления")
+                .isEqualTo(response.getFullName());
     }
 }

@@ -1,11 +1,12 @@
 package tests.movies;
 
 import api.client.MovieClient;
-import api.dto.auth.AuthResponseDto;
 import api.dto.reviews.CreateReviewRequestDto;
 import api.helper.AuthHelper;
 import db.domain.reviews.Review;
 import db.steps.UserServiceDbSteps;
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,15 +37,14 @@ public class DeleteReviewDbIntegrationTestPositive {
     @DisplayName("Удаление отзыва по АПИ и проверка в БД")
     public void shouldDeleteReviewAndNotPersistInDb() {
         // Данные теста
-        RoleCreds userRole = RoleCreds.USER;
         Integer movieId = 53;
         String text = "Отзыва для теста удаления";
         Integer rating = 5;
 
         // Логинимся юзером для создания отзыва и получаем токен для запроса и юзерайди для поиска отзыва
-        AuthResponseDto auth = authHelper.login(RoleCreds.USER);
-        String userToken = auth.getAccessToken();
-        String userId = auth.getUser().getId();
+        Pair<String, String> authData = authHelper.loginAndGetToken(RoleCreds.USER);
+        String userId = authData.getLeft();
+        String userToken = authData.getRight();
 
         //Фиксируем для очистки
         cleanUserId = userId;
@@ -62,8 +62,12 @@ public class DeleteReviewDbIntegrationTestPositive {
 
         //Проверяем что отзщыв не пустой/создался таки
         Review reviewBeforeDelete = userServiceDbSteps.getReviewByUserAndMovieId(userId, movieId);
-        assertThat(reviewBeforeDelete).as("Отзыв должен присутствовать после создания").isNotNull();
-        assertThat(reviewBeforeDelete.getText()).isEqualTo(text);
+        assertThat(reviewBeforeDelete)
+                .as("Отзыв должен присутствовать после создания")
+                .isNotNull();
+        assertThat(reviewBeforeDelete.getText())
+                .as("Значение text в БД после создания отзыва должно быть равно значению text указанному при создании")
+                .isEqualTo(text);
 
         //логинимся админом для удаления отзыва
         String adminToken = authHelper.login(RoleCreds.ADMIN).getAccessToken();
@@ -73,14 +77,18 @@ public class DeleteReviewDbIntegrationTestPositive {
 
         //проверки
         Review reviewAfterDelete = userServiceDbSteps.getReviewByUserAndMovieId(userId, movieId);
-        assertThat(reviewAfterDelete).as("Отзыв должен отсутствовать после удаления").isNull();
+        assertThat(reviewAfterDelete)
+                .as("Отзыв должен отсутствовать после удаления")
+                .isNull();
     }
 
+    @AfterEach
     void cleanUp() {
-        if (cleanMovieId != null && cleanUserId != null) {
-            String adminToken = authHelper.login(RoleCreds.ADMIN).getAccessToken();
+        Review review = userServiceDbSteps.getReviewByUserAndMovieId(cleanUserId, cleanMovieId);
+        if (review != null) {
+                String adminToken = authHelper.login(RoleCreds.ADMIN).getAccessToken();
 
-            movieClient.deleteReview(cleanMovieId, cleanUserId, adminToken);
+                movieClient.deleteReview(cleanMovieId, cleanUserId, adminToken);
         }
     }
 }

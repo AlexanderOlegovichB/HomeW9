@@ -1,12 +1,12 @@
 package tests.movies;
 
 import api.client.MovieClient;
-import api.dto.auth.AuthResponseDto;
 import api.dto.reviews.CreateReviewRequestDto;
 import api.dto.reviews.ReviewResponseDto;
 import api.helper.AuthHelper;
 import db.domain.reviews.Review;
 import db.steps.UserServiceDbSteps;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,15 +39,14 @@ public class CreateReviewDbIntegrationTestPositive {
     @DisplayName("Создание отзыва через АПИ и проверка в БД")
     public void shouldCreateReviewAndPersistInDbTest() {
         // ДАнные
-        RoleCreds userRole = RoleCreds.USER;
         Integer movieId = 53;
         String text = "Фильм получается ага";
         Integer rating = 4;
 
         // логинимся и получаем токен для выполнения запроса и юзерайди для поиска отзыва
-        AuthResponseDto auth = authHelper.login(userRole);
-        String token = auth.getAccessToken();
-        String userId = auth.getUser().getId();
+        Pair<String, String> authData = authHelper.loginAndGetToken(RoleCreds.USER);
+        String userId = authData.getLeft();
+        String userToken = authData.getRight();
 
         // Фиксируем для метода очистки
         cleanMovieId = movieId;
@@ -61,16 +60,28 @@ public class CreateReviewDbIntegrationTestPositive {
                 .build();
 
         // Прокидываем запрос
-        ReviewResponseDto response = movieClient.createReview(request, token);
+        ReviewResponseDto response = movieClient.createReview(request, userToken);
         //Смотрим отзыв в БД
         Review reviewFromDb = userServiceDbSteps.getReviewByUserAndMovieId(userId, movieId);
         //Проверки
-        assertThat(reviewFromDb.getUserId()).isEqualTo(response.getUserId());
-        assertThat(reviewFromDb.getText()).isEqualTo(response.getText());
-        assertThat(reviewFromDb.getRating()).isEqualTo(response.getRating());
-        assertThat(reviewFromDb.getMovieId()).isEqualTo(movieId);
-        assertThat(reviewFromDb.getHidden()).isEqualTo(response.isHidden());
-        assertThat(reviewFromDb.getCreatedAt()).isNotNull();
+        assertThat(reviewFromDb.getUserId())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isEqualTo(response.getUserId());
+        assertThat(reviewFromDb.getText())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isEqualTo(response.getText());
+        assertThat(reviewFromDb.getRating())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isEqualTo(response.getRating());
+        assertThat(reviewFromDb.getMovieId())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isEqualTo(movieId);
+        assertThat(reviewFromDb.getHidden())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isEqualTo(response.isHidden());
+        assertThat(reviewFromDb.getCreatedAt())
+                .as("userId в БД должен совпадать с userId из ответа создания")
+                .isNotNull();
     }
 
 
