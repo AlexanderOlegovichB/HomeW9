@@ -1,4 +1,4 @@
-package api.dto;
+package api.dto.reviews;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequestDto {
-
-
+public class CreateReviewRequestDto {
+    private Integer movieId;
+    private Integer rating;
+    private String text;
 }
