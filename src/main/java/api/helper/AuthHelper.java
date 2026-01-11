@@ -27,8 +27,4 @@ public class AuthHelper {
         String token = auth.getAccessToken();
         return Pair.of(userId, token);
     }
-
-    public String getAuthToken(RoleCreds role) {
-        return login(role).getAccessToken();
-    }
 }
