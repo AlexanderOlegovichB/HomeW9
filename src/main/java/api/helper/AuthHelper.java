@@ -28,10 +28,6 @@ public class AuthHelper {
         return Pair.of(userId, token);
     }
 
-    public String getAuthToken() {
-        return getAuthToken(RoleCreds.USER);
-    }
-
     public String getAuthToken(RoleCreds role) {
         return login(role).getAccessToken();
     }

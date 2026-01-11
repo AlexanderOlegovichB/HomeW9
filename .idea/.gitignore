@@ -1,3 +1,23 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+# Папки, генерируемые IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# Папки сборки и зависимостей
+build/
+.gradle/
+out/
+
+# Логи и отчёты
+*.log
+/logs
+/reports
+/allure-results
+
+# Системные файлы ОС
+.DS_Store
+Thumbs.db
