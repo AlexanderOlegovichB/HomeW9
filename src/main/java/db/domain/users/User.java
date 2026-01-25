@@ -1,9 +1,13 @@
 package db.domain.users;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import utils.Roles;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,5 +22,5 @@ public class User {
     private LocalDateTime updatedAt;
     private Boolean verified;
     private Boolean banned;
-    private Roles roles;
+    private List<Roles> roles;
 }

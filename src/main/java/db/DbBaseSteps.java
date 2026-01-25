@@ -18,7 +18,8 @@ public abstract class DbBaseSteps {
 
     /**
      * Конструктор: настраивает подключение к базе, регистрирует плагины и ObjectMapper.
-     * @param url JDBC-url вашей базы (например, "jdbc:postgresql://localhost:5432/mydb")
+     *
+     * @param url      JDBC-url вашей базы (например, "jdbc:postgresql://localhost:5432/mydb")
      * @param username Логин для подключения
      * @param password Пароль для подключения
      */
