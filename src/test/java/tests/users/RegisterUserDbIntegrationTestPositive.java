@@ -7,6 +7,7 @@ import db.domain.users.User;
 import db.steps.UserServiceDbSteps;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.DbName;
 import utils.DbUtils;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Позитивная регистрация пользователя")
+@Tag("UserTests")
 public class RegisterUserDbIntegrationTestPositive {
 
     private UserApiClient userApiClient;
