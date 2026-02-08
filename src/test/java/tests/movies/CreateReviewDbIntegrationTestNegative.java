@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.DbName;
 import utils.DbUtils;
@@ -17,6 +18,7 @@ import utils.RoleCreds;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Негативный тест создания отзыва")
+@Tag("Regress")
 public class CreateReviewDbIntegrationTestNegative {
     private MovieClient movieClient;
     private AuthHelper authHelper;

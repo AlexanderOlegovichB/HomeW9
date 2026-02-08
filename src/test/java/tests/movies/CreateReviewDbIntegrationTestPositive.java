@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.DbName;
 import utils.DbUtils;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DisplayName("Позитивное создание отзыва")
+@Tag("Smoke")
 public class CreateReviewDbIntegrationTestPositive {
     private MovieClient movieClient;
     private UserServiceDbSteps userServiceDbSteps;

@@ -43,7 +43,7 @@ public class UserApiClient {
                 .when()
                 .post("/login")
                 .then()
-                .spec(responseSpecOk())
+                .spec(responseSpecCreatedOk())
                 .extract()
                 .as(AuthResponseDto.class);
     }
