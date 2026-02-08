@@ -31,9 +31,9 @@ public class RegisterUserDbIntegrationTestPositive {
     @DisplayName("Регистрация пользователя через API и проверка записи в БД")
     void createUserAndCheckInDbTest() {
         // подготовка данных
-        String email = "test" + UUID.randomUUID() + "@example.com";
+        String email = "test" + System.currentTimeMillis() % 100000 + "@example.com";
         String fullName = "ТестАлександра";
-        String password = "SuperSecretPassword1234";
+        String password = "SecretPassword1234";
 
         // Собираем тело запроса
         RegisterDto request = RegisterDto.builder()
