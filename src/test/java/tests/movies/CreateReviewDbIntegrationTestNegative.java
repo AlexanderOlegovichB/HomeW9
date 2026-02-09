@@ -18,7 +18,7 @@ import utils.RoleCreds;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Негативный тест создания отзыва")
-@Tag("Regress")
+@Tag("regress")
 public class CreateReviewDbIntegrationTestNegative {
     private MovieClient movieClient;
     private AuthHelper authHelper;
