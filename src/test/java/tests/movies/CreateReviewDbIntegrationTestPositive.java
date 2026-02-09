@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DisplayName("Позитивное создание отзыва")
-@Tag("Smoke")
+@Tag("smoke")
 public class CreateReviewDbIntegrationTestPositive {
     private MovieClient movieClient;
     private UserServiceDbSteps userServiceDbSteps;

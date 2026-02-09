@@ -18,7 +18,7 @@ import utils.RoleCreds;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Позитивное удаление отзыва")
-@Tag("Smoke")
+@Tag("smoke")
 public class DeleteReviewDbIntegrationTestPositive {
     private MovieClient movieClient;
     private UserServiceDbSteps userServiceDbSteps;

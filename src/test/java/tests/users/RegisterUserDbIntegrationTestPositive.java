@@ -17,7 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Позитивная регистрация пользователя")
-@Tag("UserTests")
+@Tag("userTests")
 public class RegisterUserDbIntegrationTestPositive {
 
     private UserApiClient userApiClient;
