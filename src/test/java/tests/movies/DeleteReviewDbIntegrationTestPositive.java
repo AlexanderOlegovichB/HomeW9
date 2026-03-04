@@ -39,7 +39,7 @@ public class DeleteReviewDbIntegrationTestPositive {
     @DisplayName("Удаление отзыва по АПИ и проверка в БД")
     public void shouldDeleteReviewAndNotPersistInDb() {
         // Данные теста
-        Integer movieId = 53;
+        Integer movieId = 51;
         String text = "Отзыва для теста удаления";
         Integer rating = 5;
 

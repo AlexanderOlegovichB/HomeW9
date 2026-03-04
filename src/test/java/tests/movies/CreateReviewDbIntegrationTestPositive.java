@@ -41,7 +41,7 @@ public class CreateReviewDbIntegrationTestPositive {
     @DisplayName("Создание отзыва через АПИ и проверка в БД")
     public void shouldCreateReviewAndPersistInDbTest() {
         // ДАнные
-        Integer movieId = 53;
+        Integer movieId = 52;
         String text = "Фильм получается ага";
         Integer rating = 4;
 
